@@ -1,0 +1,18 @@
+{
+    "name": "test",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "name": "http://localhost:3978/api/messages",
+            "id": "ea406f40-7114-11ee-8326-eb840a0fdaff",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://localhost:3978/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "path": "C:\\Proyectos\\Documentos\\Chatbots\\Formacion\\Sample 2\\sample-botframework\\Sample_BF\\Sample_BF\\test.bot",
+    "overrides": null
+}
