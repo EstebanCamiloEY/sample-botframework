@@ -16,12 +16,18 @@ namespace Sample_BF.Bot
             // Funcion que te devuelve la fecha actual en formato DateTime
             var actualDate = DateTime.Now;
             // Funcion que te divide un string en un array de string apartir de un caracter.
-            var textSplittedByPlus = "2+2".Split('+');
+            var textSplittedByPlus = turnContext.Activity.Text.Split('+');
             // Funcion que te devuelve el numero de telefono movil en españa de un string.
-            var phoneNumber = Regex.Match("este es mi numero 612345678", patter);
+            var phoneNumber = Regex.Match(turnContext.Activity.Text, patter);
 
-            var replyText = $"Echo: {turnContext.Activity.Text}";
-            await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
+            if(turnContext.Activity.Text.Equals("fecha actual"))
+                await turnContext.SendActivityAsync(MessageFactory.Text($"La fecha actual es {actualDate.ToString("dd-MMMM-yyyy")}"), cancellationToken);
+            else if(!string.IsNullOrWhiteSpace(phoneNumber.ToString()))
+                await turnContext.SendActivityAsync(MessageFactory.Text($"El numero de telefono reconocido es {phoneNumber}"), cancellationToken);
+            else if (textSplittedByPlus.Length >= 2)
+                await turnContext.SendActivityAsync(MessageFactory.Text($"La suma de {textSplittedByPlus[0]} + {textSplittedByPlus[1]} es {int.Parse(textSplittedByPlus[0]) + int.Parse(textSplittedByPlus[1])}"), cancellationToken);
+            else
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"));
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
